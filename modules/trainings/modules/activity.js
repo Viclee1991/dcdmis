@@ -172,7 +172,9 @@ $(function () {
             },
             minLength: 3,
             select: function (event, ui) {
-                $('#qrInput').val(ui.item.employee_id);
+                // Keep the employee ID as a string. IDs are 18-19 digits and
+                // lose precision if they pass through a JavaScript number.
+                $('#qrInput').val(String(ui.item.employee_id));
                 return false;
             }
         });        
@@ -259,7 +261,7 @@ function saveAttendance(employee_id, status) {
                 });
             } else {
                 $('#modalName').text("Oops!");
-                $('#modalQR').text('Employee Already attended this training.');
+                $('#modalQR').text(res.message || 'Unable to record attendance.');
 
                 $('#attendanceModal').modal('show');
             }
